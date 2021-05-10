@@ -1,0 +1,19 @@
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Marka</th>
+            <th>Renk</th>
+            <th>Model Yılı</th>
+            <th>Fiyat</th>
+            <th>Açıklama</th>
+        </tr>
+    </thead>
+    <tr *ngFor="let car of cars">
+        <td>{{car}}</td>
+        <td>{{product.productName}}</td>
+        <td>{{product.categoryId}}</td>
+        <td>{{product.unitPrice}}</td>
+        <td>{{product.unitsInStock}}</td>
+    </tr>
+</table>
