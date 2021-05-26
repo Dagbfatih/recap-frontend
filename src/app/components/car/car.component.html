@@ -10,10 +10,11 @@
         </tr>
     </thead>
     <tr *ngFor="let car of cars">
-        <td>{{car}}</td>
-        <td>{{product.productName}}</td>
-        <td>{{product.categoryId}}</td>
-        <td>{{product.unitPrice}}</td>
-        <td>{{product.unitsInStock}}</td>
+        <td>{{car.carId}}</td>
+        <td>{{car.brandName}}</td>
+        <td>{{car.colorName}}</td>
+        <td>{{car.modelYear}}</td>
+        <td>{{car.dailyPrice}}</td>
+        <td>{{car.description}}</td>
     </tr>
 </table>
