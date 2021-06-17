@@ -1,14 +1,20 @@
-<div class="card" style="width: 18rem;">
+<div *ngIf="!dataLoaded" class="spinner-border text-success" role="status">
+    <span class="visually-hidden">Loading...</span>
+</div>
+
+<div *ngIf="dataLoaded==true" class="card" style="width: 18rem;">
 
     <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
         <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img src="{{ imageUrl }}{{ images[0].imagePath}}" class="d-block w-100" />
+
+            <div *ngIf="images.length === 0" class="carousel-item active">
+                <img [src]="defaultImageUrl" class="d-block w-100" />
             </div>
 
             <div *ngFor="let image of images" class="carousel-item">
                 <img src="{{ imageUrl }}{{ image.imagePath }}" class="d-block w-100" />
             </div>
+
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
             data-bs-slide="prev">
@@ -21,120 +27,18 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
-
-    <!-- <div id="carouselExampleIndicators" data-interval="false" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-indicators">
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
-                aria-current="true" aria-label="Slide 1"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
-                aria-label="Slide 2"></button>
-            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"
-                aria-label="Slide 3"></button>
-        </div>
-        <div class="carousel-inner">
-            <div class="carousel-item" *ngFor="let image of images; let i = index" [ngClass]="{'active': i == 0 }">
-                <img src="{{imageUrl}}/{{image.imagePath}}" class="d-block w-100">
-            </div>
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div> -->
+    <!-- CAROUSEL FİNİSH -->
 
     <div class="card-body">
         <h5 class="card-title">{{car.brandName}}</h5>
-        <p class="card-text">{{car.description}}</p>
     </div>
     <ul class="list-group list-group-flush">
-        <li class="list-group-item">Color: {{car.colorName}}</li>
-        <li class="list-group-item">Model Year: {{car.modelYear}}</li>
-        <li class="list-group-item">Daily Price: {{car.dailyPrice}}</li>
+        <li class="list-group-item">Açıklama: {{car.description}}</li>
+        <li class="list-group-item">Renk: {{car.colorName}}</li>
+        <li class="list-group-item">Model Yılı: {{car.modelYear}}</li>
+        <li class="list-group-item">Günlük Fiyat: {{car.dailyPrice | currency: "TRY":'symbol-narrow'}}</li>
     </ul>
-    <!-- <div class="card-body">
-      <a href="#" class="card-link">Card link</a>
-      <a href="#" class="card-link">Another link</a>
-    </div> -->
+    <div *ngIf="checkIfRentalPage() === -1" class="card-body text-end">
+        <a routerLink="/rentals/rentACar/{{car.carId}}" class="btn btn-success">Kirala</a>
+    </div>
 </div>
-
-<!-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-
-<div class="container">
-    <br>
-    <h4>Bootstrap 4 and CCS3 Product Cards with Transition - Techhowdy(demonguru18) - Lyoid Lopes</h4>
-	<br>
-	<div class="row" id="ads">
-
-    <div class="col-md-4">
-        <div class="card rounded">
-            <div class="card-image">
-                <span class="card-notify-badge">Low KMS</span>
-                <span class="card-notify-year">2018</span>
-                <img class="img-fluid" src="https://imageonthefly.autodatadirect.com/images/?USER=eDealer&PW=edealer872&IMG=USC80HOC011A021001.jpg&width=440&height=262" alt="Alternate Text" />
-            </div>
-            <div class="card-image-overlay m-auto">
-                <span class="card-detail-badge">Used</span>
-                <span class="card-detail-badge">$28,000.00</span>
-                <span class="card-detail-badge">13000 Kms</span>
-            </div>
-            <div class="card-body text-center">
-                <div class="ad-title m-auto">
-                    <h5>Honda Accord LX</h5>
-                </div>
-                <a class="ad-btn" href="#">View</a>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="card rounded">
-            <div class="card-image">
-                <span class="card-notify-badge">Fully-Loaded</span>
-                <span class="card-notify-year">2017</span>
-                <img class="img-fluid" src="https://imageonthefly.autodatadirect.com/images/?USER=eDealer&PW=edealer872&IMG=CAC80HOC021B121001.jpg&width=440&height=262" alt="Alternate Text" />
-            </div>
-            <div class="card-image-overlay m-auto">
-                <span class="card-detail-badge">Used</span>
-                <span class="card-detail-badge">$28,000.00</span>
-                <span class="card-detail-badge">13000 Kms</span>
-            </div>
-            <div class="card-body text-center">
-                <div class="ad-title m-auto">
-                    <h5>Honda CIVIC HATCHBACK LS</h5>
-                </div>
-                <a class="ad-btn" href="#">View</a>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card rounded">
-            <div class="card-image">
-                <span class="card-notify-badge">Price Reduced</span>
-                <span class="card-notify-year">2018</span>
-                <img class="img-fluid" src="https://imageonthefly.autodatadirect.com/images/?USER=eDealer&PW=edealer872&IMG=USC80HOC091A021001.jpg&width=440&height=262" alt="Alternate Text" />
-            </div>
-            <div class="card-image-overlay m-auto">
-                <span class="card-detail-badge">Used</span>
-                <span class="card-detail-badge">$22,000.00</span>
-                <span class="card-detail-badge">8000 Kms</span>
-            </div>
-            <div class="card-body text-center">
-                <div class="ad-title m-auto">
-                    <h5>Honda Accord Hybrid LT</h5>
-                </div>
-                <a class="ad-btn" href="#">View</a>
-            </div>
-        </div>
-    </div>
-
-</div>
-</div> -->

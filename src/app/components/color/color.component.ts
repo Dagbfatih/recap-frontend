@@ -11,6 +11,7 @@ export class ColorComponent implements OnInit {
   colors: Color[] = [];
   dataLoaded = false;
   currentColor: Color | null;
+  filterText = '';
 
   constructor(private colorService: ColorService) {}
 
@@ -29,19 +30,19 @@ export class ColorComponent implements OnInit {
     this.currentColor = color;
   }
 
-  getCurrentColorClass(color:Color){
-    if (this.currentColor==color) {
-      return "list-group-item active";
+  getCurrentColorClass(color: Color) {
+    if (this.currentColor == color) {
+      return 'list-group-item active';
     } else {
-      return "list-group-item";
+      return 'list-group-item';
     }
   }
 
-  getAllColorClass(){
-    if (this.currentColor==null) {
-      return "list-group-item active";
+  getAllColorClass() {
+    if (this.currentColor == null) {
+      return 'list-group-item active';
     } else {
-      return "list-group-item";
+      return 'list-group-item';
     }
   }
 }

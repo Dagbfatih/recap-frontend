@@ -1,0 +1,53 @@
+<form class="row g-3">
+    <div class="col-md-6">
+        <label for="inputEmail4" class="form-label">Kart Üzerindeki İsim</label>
+        <input [(ngModel)]="cardName" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+            id="inputCartOwner">
+    </div>
+    <div class="col-md-6">
+        <label for="inputPassword4" class="form-label">Kart Numarası</label>
+        <input [(ngModel)]="cardNumber" [ngModelOptions]="{standalone: true}" type="text" class="form-control"
+            id="inputPassword4">
+        <div class="invalid-feedback">
+            Bu Alanı Boş Bırakamazsınız
+        </div>
+    </div>
+    <div class="col-sm-10">
+        <div class="form-group">
+            <label>
+                <span class="hidden-xs">
+                    <h6>Son Kullanma Tarihi</h6>
+                </span>
+            </label>
+            <div class="input-group">
+                <!-- <input [(ngModel)]="expirationDateMonth" [ngModelOptions]="{standalone: true}" type="number" placeholder="MM" name="" class="form-control" required>
+                <input [(ngModel)]="expirationDateYear" [ngModelOptions]="{standalone: true}" type="number" placeholder="YY" name="" class="form-control" required> -->
+                <div class="form-group">
+                    <input [(ngModel)]="expirationDate" [ngModelOptions]="{standalone: true}" id="cc-exp" type="tel" class="input-lg form-control cc-exp" autocomplete="cc-exp"
+                        placeholder="•• / ••" required>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <label for="inputZip" class="form-label">CVV</label>
+        <input [(ngModel)]="cvv" [ngModelOptions]="{standalone: true}" type="number" class="form-control"
+            id="inputCartOwner">
+    </div>
+    <div class="col-12">
+        <div class="form-check">
+            <input [(ngModel)]="cardIsSave" [ngModelOptions]="{standalone: true}" class="form-check-input"
+                type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+                Kart Bilgilerimi Kaydet
+            </label>
+        </div>
+    </div>
+    <div class="btn-toolbar">
+
+        <button type="submit" class="btn btn-outline-success me-2" routerLink="/rentals/rentACar/{{rental.carId}}">Geri</button>
+        <button type="submit" class="btn btn-success" (click)="pay()">Ödemeyi Onayla</button>
+
+    </div>
+</form>

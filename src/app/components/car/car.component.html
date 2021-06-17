@@ -1,29 +1,86 @@
-<div *ngIf="dataLoaded == false" class="spinner-border text-success" role="status">
-    <span class="visually-hidden">Loading...</span>
+<div class="row">
+    <div class="col-md-2">
+        <app-color></app-color>
+        <app-brand></app-brand>
+    </div>
+
+    <div class="col-md-10">
+        <div *ngIf="dataLoaded == false" class="spinner-border text-success" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+
+        <div class="row">
+            <div class="col-md-7">
+                <div class="mb-3">
+                    <!-- <label for="exampleFormControlInput1" class="form-label">Ara</label> -->
+                    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText"
+                        placeholder="arama ifadesini giriniz">
+                </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <!-- <label for="exampleFormControlInput1" class="form-label">Marka</label> -->
+
+                    <select [(ngModel)]="brandId" class="form-select" aria-label="Default select example">
+                        <option *ngFor="let brand of brands" [value]="brand.brandId">{{brand.brandName}}</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="col-md-2">
+                <div class="mb-3">
+                    <!-- <label for="exampleFormControlInput1" class="form-label">Renk</label> -->
+
+                    <select [(ngModel)]="colorId" class="form-select" aria-label="Default select example">
+                        <option *ngFor="let color of colors" [value]="color.colorId">{{color.colorName}}</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="col-md-1">
+                <div class="mb-3">
+                    <button [routerLink]="getFilterRouterClass()" type="button"
+                        class="btn btn-success">Filtrele</button>
+                </div>
+            </div>
+
+            <h6>c: {{colorId}}</h6>
+            <h6>b: {{brandId}}</h6>
+        </div>
+
+        <div *ngIf="filterText" class="alert alert-primary">
+            {{filterText}} aradınız
+        </div>
+
+        <!-- data manage -->
+
+        <table *ngIf="dataLoaded != false" class="table">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Marka</th>
+                    <th>Renk</th>
+                    <th>Model Yılı</th>
+                    <th>Fiyat</th>
+                    <th>Açıklama</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let car of cars | filterPipe:filterText" (click)="setCurrentCar(car)"
+                    [class]="getCurrentCarClass(car)">
+                    <td>{{car.carId}}</td>
+                    <td>{{car.brandName}}</td>
+                    <td>{{car.colorName}}</td>
+                    <td>{{car.modelYear}}</td>
+                    <td>{{car.dailyPrice}}</td>
+                    <td>{{car.description}}</td>
+                    <td><button routerLink="/cars/details/{{car.carId}}" type="button" class="btn btn-success">Detayları Görüntüle</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
 </div>
-
-<table *ngIf="dataLoaded != false" class="table">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Marka</th>
-            <th>Renk</th>
-            <th>Model Yılı</th>
-            <th>Fiyat</th>
-            <th>Açıklama</th>
-        </tr>
-    </thead>
-    <tr *ngFor="let car of cars"
-    routerLink="/cars/details/{{car.carId}}"
-    (click)="setCurrentCar(car)"
-    [class]="getCurrentCarClass(car)">
-        <td>{{car.carId}}</td>
-        <td>{{car.brandName}}</td>
-        <td>{{car.colorName}}</td>
-        <td>{{car.modelYear}}</td>
-        <td>{{car.dailyPrice}}</td>
-        <td>{{car.description}}</td>
-    </tr>
-</table>
-
-<h4 *ngIf="currentCar">id: {{currentCar.carId}}</h4>

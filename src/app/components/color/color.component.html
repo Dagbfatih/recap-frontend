@@ -1,16 +1,16 @@
+<div class="mb-3">
+    <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="arama ifadesi">
+</div>
+
 <ul>
-    <li routerLink="/cars"
-    [class]="getAllColorClass()"
-    (click)="currentColor=null;">
-    Tüm Renkler
+    <li routerLink="/cars" [class]="getAllColorClass()" (click)="currentColor=null;">
+        Tüm Renkler
     </li>
 
-    <li (click)="setCurrentColor(color)"
-    routerLink="/cars/color/{{color.colorId}}"
-    *ngFor="let color of colors"
-    [class]="getCurrentColorClass(color)">
+    <li (click)="setCurrentColor(color)" routerLink="/cars/color/{{color.colorId}}"
+        *ngFor="let color of colors | colorFilterPipe:filterText" [class]="getCurrentColorClass(color)">
         {{color.colorName}}
     </li>
-    
+
 </ul>
 <h5 *ngIf="currentColor">{{currentColor.colorName}} seçtiniz</h5>

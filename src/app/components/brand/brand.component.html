@@ -1,16 +1,16 @@
 <ul>
-    <li routerLink="/cars"
-    [class]="getAllBrandClass()"
-    (click)="currentBrand=null;">
-    Tüm Arabalar
+    <div class="mb-3">
+        <!-- <label for="exampleFormControlInput1" class="form-label">Ara</label> -->
+        <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="arama ifadesini giriniz">
+    </div>
+
+    <li routerLink="/cars" [class]="getAllBrandClass()" (click)="currentBrand=null;">
+        Tüm Arabalar
     </li>
 
-    <li (click)="setCurrentBrand(brand)"
-    routerLink="/cars/brand/{{brand.brandId}}"
-    *ngFor="let brand of brands"
-    [class]="getCurrentBrandClass(brand)">
+    <li (click)="setCurrentBrand(brand)" routerLink="/cars/brand/{{brand.brandId}}" *ngFor="let brand of brands | brandFilterPipe:filterText"
+        [class]="getCurrentBrandClass(brand)">
         {{brand.brandName}}
     </li>
-    
 </ul>
 <h5 *ngIf="currentBrand">{{currentBrand.brandName}} seçtiniz</h5>
