@@ -7,6 +7,15 @@ import { Rental } from 'src/app/models/rental';
 import { CarImageService } from 'src/app/services/car-image.service';
 import { CarService } from 'src/app/services/car.service';
 import { environment } from 'src/environments/environment';
+import {
+  FormGroup,
+  FormBuilder,
+  FormControl,
+  Validators,
+} from '@angular/forms';
+import { RentalService } from 'src/app/services/rental.service';
+import { Car } from 'src/app/models/car';
+import { ErrorHandlerService } from 'src/app/services/error-handler.service';
 
 @Component({
   selector: 'app-rental-add',
@@ -14,45 +23,49 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./rental-add.component.css'],
 })
 export class RentalAddComponent implements OnInit {
-  carId: number;
-  rentDate: Date;
-  returnDate: Date;
-  dataLoaded = false;
+  car: Car={} as Car;
+  rentAddForm: FormGroup;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private toastrService: ToastrService
+    private toastrService: ToastrService,
+    private formBuilder: FormBuilder,
+    private rentalService: RentalService,
+    private errorHandlerService:ErrorHandlerService
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe((params) => {
-      if (params['carId']) {
-        this.carId = params['carId'];
-      }
+      this.car.carId = params.id;
+    });
+    this.createRentalAddForm();
+  }
+
+  createRentalAddForm() {
+    this.rentAddForm = this.formBuilder.group({
+      rentDate: ['', Validators.required],
+      returnDate: ['', Validators.required],
     });
   }
 
-  rent() {
-    if (
-      this.rentDate > this.returnDate ||
-      this.rentDate < new Date() ||
-      !this.rentDate ||
-      !this.returnDate
-    ) {
-      this.toastrService.warning(
-        'Kiralama ve Teslim Tarihleri Geçerli Değil!'
-      );
-      return;
-    }
+  add() {
+    if (this.rentAddForm.valid) {
+      let rentalModel: Rental = Object.assign({}, this.rentAddForm.value);
+      rentalModel.carId = this.car.carId;
 
-    let rental: Rental = {
-      carId: this.carId,
-      rentDate: this.rentDate,
-      returnDate: this.returnDate,
-      customerId: 2,
-    };
-    this.toastrService.info('Ödeme Sayfasına Yönlendiriliyorsunuz...');
-    this.router.navigate(['payment/',  JSON.stringify(rental)]);
+      this.rentalService.add(rentalModel).subscribe(
+        (response) => {
+          console.log(response);
+          this.toastrService.success(response.message, 'Başarılı');
+        },
+        (responseError) => {
+          let errorMessages=this.errorHandlerService.getErrorMessages(responseError);
+          errorMessages.forEach(message=>this.toastrService.error(message));
+        }
+      );
+    } else {
+      this.toastrService.warning('Formunuz Eksik', 'Dikkat');
+    }
   }
 }

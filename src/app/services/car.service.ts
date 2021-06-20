@@ -6,6 +6,7 @@ import { ListResponseModel } from '../models/listResponseModel';
 import { ItemResponseModel } from '../models/itemResponseModel';
 import { environment } from 'src/environments/environment';
 import { CarDetailDto } from '../models/carDetailDto';
+import { ResponseModel } from '../models/responseModel';
 
 @Injectable({
   providedIn: 'root',
@@ -47,5 +48,13 @@ export class CarService {
       colorId;
     console.log(newPath);
     return this.httpClient.get<ListResponseModel<CarDetailDto>>(newPath);
+  }
+
+  add(car:Car):Observable<ResponseModel>{
+    return this.httpClient.post<ResponseModel>(this.apiUrl+"cars/add", car);
+  }
+
+  update(car:Car):Observable<ResponseModel>{
+    return this.httpClient.post<ResponseModel>(this.apiUrl+"cars/update", car);
   }
 }

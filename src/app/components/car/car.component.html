@@ -45,9 +45,6 @@
                         class="btn btn-success">Filtrele</button>
                 </div>
             </div>
-
-            <h6>c: {{colorId}}</h6>
-            <h6>b: {{brandId}}</h6>
         </div>
 
         <div *ngIf="filterText" class="alert alert-primary">
@@ -66,6 +63,7 @@
                     <th>Fiyat</th>
                     <th>Açıklama</th>
                     <th></th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -78,6 +76,7 @@
                     <td>{{car.dailyPrice}}</td>
                     <td>{{car.description}}</td>
                     <td><button routerLink="/cars/details/{{car.carId}}" type="button" class="btn btn-success">Detayları Görüntüle</button></td>
+                    <td><button routerLink="/cars/update/{{car.carId}}" type="button" class="btn btn-warning">Güncelle</button></td>
                 </tr>
             </tbody>
         </table>

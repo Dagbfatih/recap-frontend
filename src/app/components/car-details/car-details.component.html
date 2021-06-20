@@ -2,43 +2,46 @@
     <span class="visually-hidden">Loading...</span>
 </div>
 
-<div *ngIf="dataLoaded==true" class="card" style="width: 18rem;">
-
-    <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-
-            <div *ngIf="images.length === 0" class="carousel-item active">
-                <img [src]="defaultImageUrl" class="d-block w-100" />
-            </div>
-
-            <div *ngFor="let image of images" class="carousel-item">
-                <img src="{{ imageUrl }}{{ image.imagePath }}" class="d-block w-100" />
-            </div>
-
-        </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
-            data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
-            data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-        </button>
-    </div>
-    <!-- CAROUSEL FİNİSH -->
-
-    <div class="card-body">
+<div *ngIf="dataLoaded==true" class="card">
+    <div class="card-header" style="background-color: #74992e;">
         <h5 class="card-title">{{car.brandName}}</h5>
     </div>
-    <ul class="list-group list-group-flush">
-        <li class="list-group-item">Açıklama: {{car.description}}</li>
-        <li class="list-group-item">Renk: {{car.colorName}}</li>
-        <li class="list-group-item">Model Yılı: {{car.modelYear}}</li>
-        <li class="list-group-item">Günlük Fiyat: {{car.dailyPrice | currency: "TRY":'symbol-narrow'}}</li>
-    </ul>
-    <div *ngIf="checkIfRentalPage() === -1" class="card-body text-end">
+    <div class="card-body">
+        <div id="carouselExampleControls" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
+    
+                <div *ngIf="images.length === 0" class="carousel-item active">
+                    <img [src]="defaultImageUrl" class="d-block w-100" />
+                </div>
+    
+                <div *ngFor="let image of images" class="carousel-item">
+                    <img src="{{ imageUrl }}{{ image.imagePath }}" class="d-block w-100" />
+                </div>
+    
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls"
+                data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">Açıklama: {{car.description}}</li>
+                <li class="list-group-item">Renk: {{car.colorName}}</li>
+                <li class="list-group-item">Model Yılı: {{car.modelYear}}</li>
+                <li class="list-group-item">Günlük Fiyat: {{car.dailyPrice | currency: "TRY":'symbol-narrow'}}</li>
+            </ul>
+        </div>
+    </div>
+    
+    <div *ngIf="checkIfRentalPage() === -1" class="card-footer text-end"> 
         <a routerLink="/rentals/rentACar/{{car.carId}}" class="btn btn-success">Kirala</a>
     </div>
 </div>
